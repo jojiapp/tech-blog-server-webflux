@@ -1,4 +1,4 @@
-package com.jojiapp.techblogserverspring.post.controller.dto;
+package com.jojiapp.techblogserverspring.post.router.dto;
 
 import lombok.*;
 
