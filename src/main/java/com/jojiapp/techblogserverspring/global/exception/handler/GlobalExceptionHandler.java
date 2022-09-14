@@ -1,4 +1,4 @@
-package com.jojiapp.techblogserverspring.global.exception;
+package com.jojiapp.techblogserverspring.global.exception.handler;
 
 import lombok.extern.slf4j.*;
 import org.springframework.boot.autoconfigure.web.*;
