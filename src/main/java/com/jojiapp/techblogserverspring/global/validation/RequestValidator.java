@@ -27,9 +27,25 @@ public class RequestValidator {
                     final String objectName = getObjectName(body);
                     final BindingResult bindingResult = new BeanPropertyBindingResult(body, objectName);
 
-                    validate.forEach(c -> bindingResult.addError(
-                            new FieldError(objectName, c.getPropertyPath().toString(), c.getMessage())
-                    ));
+                    validate.forEach(c -> {
+                        Object[] validationArgs = c.getConstraintDescriptor()
+                                .getAttributes()
+                                .entrySet()
+                                .stream()
+                                .filter(entry -> {
+                                            String key = entry.getKey();
+                                            return !key.equals("groups") &&
+                                                    !key.equals("message") &&
+                                                    !key.equals("payload");
+                                        }
+
+                                )
+                                .map(Map.Entry::getValue)
+                                .toArray();
+                        bindingResult.addError(
+                                new FieldError(objectName, c.getPropertyPath().toString(), c.getMessage())
+                        );
+                    });
 
                     return Mono.error(new BindException(bindingResult));
                 }
