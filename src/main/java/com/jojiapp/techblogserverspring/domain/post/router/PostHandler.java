@@ -1,6 +1,6 @@
-package com.jojiapp.techblogserverspring.post.router;
+package com.jojiapp.techblogserverspring.domain.post.router;
 
-import com.jojiapp.techblogserverspring.post.router.dto.*;
+import com.jojiapp.techblogserverspring.domain.post.router.dto.*;
 import lombok.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.reactive.function.server.*;

@@ -1,4 +1,4 @@
-package com.jojiapp.techblogserverspring.global.config;
+package com.jojiapp.techblogserverspring.global.exception;
 
 import org.springframework.boot.autoconfigure.web.*;
 import org.springframework.context.annotation.*;

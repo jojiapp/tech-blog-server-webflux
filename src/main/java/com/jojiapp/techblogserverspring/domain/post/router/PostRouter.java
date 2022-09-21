@@ -1,7 +1,7 @@
-package com.jojiapp.techblogserverspring.post.router;
+package com.jojiapp.techblogserverspring.domain.post.router;
 
+import com.jojiapp.techblogserverspring.domain.post.router.dto.*;
 import com.jojiapp.techblogserverspring.global.validation.*;
-import com.jojiapp.techblogserverspring.post.router.dto.*;
 import lombok.*;
 import org.springframework.context.annotation.*;
 import org.springframework.web.reactive.function.server.*;
@@ -10,14 +10,14 @@ import org.springframework.web.reactive.function.server.*;
 @RequiredArgsConstructor
 public class PostRouter {
 
-    private final RequestValidator requestValidator;
+    private final WebfluxValidator webfluxValidator;
 
     @Bean
     protected RouterFunction<ServerResponse> routerExample(final PostHandler postHandler) {
         return RouterFunctions.route()
                 .POST("/posts", request ->
                         postHandler.createPost(
-                                requestValidator.body(request.bodyToMono(PostCreate.class))
+                                webfluxValidator.body(request.bodyToMono(PostCreate.class))
                         )
                 )
                 .build();
