@@ -24,7 +24,10 @@ public class BindingResultCreator {
         return bindingResult;
     }
 
-    private <T> void addFieldErrors(final BindingResult bindingResult, final Set<ConstraintViolation<T>> violations) {
+    private <T> void addFieldErrors(
+            final BindingResult bindingResult,
+            final Set<ConstraintViolation<T>> violations
+    ) {
         violations.forEach(violation ->
                 bindingResult.addError(fieldErrorCreator.create(violation))
         );
@@ -37,7 +40,9 @@ public class BindingResultCreator {
                 .orElseThrow(() -> new IllegalArgumentException(EMPTY_ERROR_MESSAGE));
     }
 
-    private static <T> BeanPropertyBindingResult createDefaultBindingResult(final ConstraintViolation<T> violation) {
+    private static <T> BeanPropertyBindingResult createDefaultBindingResult(
+            final ConstraintViolation<T> violation
+    ) {
         return new BeanPropertyBindingResult(
                 violation.getRootBean(),
                 FieldErrorCreator.getObjectName(violation)

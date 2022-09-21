@@ -3,6 +3,7 @@ package com.jojiapp.techblogserverspring.global.exception.handler;
 import com.fasterxml.jackson.core.type.*;
 import com.fasterxml.jackson.databind.*;
 import com.jojiapp.techblogserverspring.global.response.*;
+import com.jojiapp.techblogserverspring.global.validation.*;
 import lombok.*;
 import org.springframework.boot.web.error.*;
 import org.springframework.boot.web.reactive.error.*;
@@ -12,44 +13,53 @@ import org.springframework.validation.*;
 import org.springframework.web.reactive.function.server.*;
 
 import java.util.*;
-import java.util.stream.*;
 
+import static java.util.stream.Collectors.*;
 import static org.springframework.http.HttpStatus.*;
 
 @Component
 @RequiredArgsConstructor
 public class GlobalErrorAttributes extends DefaultErrorAttributes {
 
+    private static final String BINDING_ERROR_MESSAGE_SEP = ", ";
     private final ObjectMapper objectMapper;
-//    private final BindingErrorConvertor bindingErrorConvertor;
+    private final BindingErrorMessageConverter bindingErrorMessageConverter;
 
     @Override
-    public Map<String, Object> getErrorAttributes(final ServerRequest request, final ErrorAttributeOptions options) {
+    public Map<String, Object> getErrorAttributes(
+            final ServerRequest request,
+            final ErrorAttributeOptions options
+    ) {
         final Throwable error = getError(request);
 
-        if(error instanceof IllegalStateException) {
-            return getResponse(error.getMessage(), BAD_REQUEST);
+        if(error instanceof IllegalStateException e) {
+            return getResponse(BAD_REQUEST, e.getMessage());
         }
-        if(error instanceof BindException) {
-            final String message = ((BindException) error).getFieldErrors()
-                    .stream()
-                    .map(GlobalErrorAttributes::getBindingErrorMessage)
-                    .collect(Collectors.joining(", "));
-            return getResponse(message, BAD_REQUEST);
+
+        if(error instanceof BindException e) {
+            return getResponse(BAD_REQUEST, getBindingErrorMessage(e.getFieldErrors()));
         }
-        return getResponse(error.getMessage(), INTERNAL_SERVER_ERROR);
+
+        return getResponse(INTERNAL_SERVER_ERROR, error.getMessage());
     }
 
-    private static String getBindingErrorMessage(final FieldError fieldError) {
+    private String getBindingErrorMessage(final List<FieldError> fieldErrors) {
+        return fieldErrors
+                .stream()
+                .map(this::getBindingErrorMessage)
+                .collect(joining(BINDING_ERROR_MESSAGE_SEP));
+    }
+
+    private String getBindingErrorMessage(final FieldError fieldError) {
         return "%s: %s".formatted(
                 fieldError.getField(),
-                fieldError.getDefaultMessage()
+                bindingErrorMessageConverter.getMessage(fieldError)
         );
     }
 
     private Map<String, Object> getResponse(
-            final String message,
-            final HttpStatus httpStatus
+            final HttpStatus httpStatus,
+            final String message
     ) {
         final BaseResponse<Object> response = BaseResponse.builder()
                 .status(String.valueOf(httpStatus.value()))
@@ -57,5 +67,4 @@ public class GlobalErrorAttributes extends DefaultErrorAttributes {
                 .build();
         return objectMapper.convertValue(response, new TypeReference<>() {});
     }
-
 }

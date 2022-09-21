@@ -50,6 +50,13 @@ public class FieldErrorCreator {
         );
     }
 
+    private static <T> String getErrorCode(final ConstraintViolation<T> violation) {
+        return violation.getConstraintDescriptor()
+                .getAnnotation()
+                .annotationType()
+                .getSimpleName();
+    }
+
     public static <T> String getObjectName(final ConstraintViolation<T> violation) {
         return StringUtils.uncapitalize(
                 violation.getRootBeanClass().getSimpleName()
@@ -62,13 +69,6 @@ public class FieldErrorCreator {
 
     private static <T> Class<?> getFieldType(final ConstraintViolation<T> violation) {
         return violation.getInvalidValue().getClass();
-    }
-
-    private static <T> String getErrorCode(final ConstraintViolation<T> violation) {
-        return violation.getConstraintDescriptor()
-                .getAnnotation()
-                .annotationType()
-                .getSimpleName();
     }
 
 }
