@@ -14,6 +14,7 @@ public class PostRouter {
 
     @Bean
     protected RouterFunction<ServerResponse> routerExample(final PostHandler postHandler) {
+
         return RouterFunctions.route()
                 .POST("/posts", request ->
                         postHandler.createPost(

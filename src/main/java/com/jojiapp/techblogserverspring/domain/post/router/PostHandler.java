@@ -12,7 +12,9 @@ import java.util.*;
 @RequiredArgsConstructor
 public class PostHandler {
     public Mono<ServerResponse> createPost(final Mono<PostCreate> postCreateMono) {
+
         final Mono<Map<String, String>> markdown = postCreateMono.map(postCreate -> Map.of("markdown", postCreate.getMarkdown()));
+
         return ServerResponse.ok().body(markdown, Map.class);
     }
 }

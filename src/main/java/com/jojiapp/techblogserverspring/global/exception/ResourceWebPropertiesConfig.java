@@ -8,6 +8,7 @@ public class ResourceWebPropertiesConfig {
 
     @Bean
     public WebProperties.Resources resources() {
+
         return new WebProperties.Resources();
     }
 

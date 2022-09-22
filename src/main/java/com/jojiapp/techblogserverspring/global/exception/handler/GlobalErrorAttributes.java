@@ -3,7 +3,6 @@ package com.jojiapp.techblogserverspring.global.exception.handler;
 import com.fasterxml.jackson.core.type.*;
 import com.fasterxml.jackson.databind.*;
 import com.jojiapp.techblogserverspring.global.response.*;
-import com.jojiapp.techblogserverspring.global.validation.*;
 import lombok.*;
 import org.springframework.boot.web.error.*;
 import org.springframework.boot.web.reactive.error.*;
@@ -23,13 +22,10 @@ public class GlobalErrorAttributes extends DefaultErrorAttributes {
 
     private static final String BINDING_ERROR_MESSAGE_SEP = ", ";
     private final ObjectMapper objectMapper;
-    private final BindingErrorMessageConverter bindingErrorMessageConverter;
-
     @Override
-    public Map<String, Object> getErrorAttributes(
-            final ServerRequest request,
-            final ErrorAttributeOptions options
-    ) {
+    public Map<String, Object> getErrorAttributes(final ServerRequest request,
+                                                  final ErrorAttributeOptions options) {
+
         final Throwable error = getError(request);
 
         if(error instanceof IllegalStateException e) {
@@ -44,6 +40,7 @@ public class GlobalErrorAttributes extends DefaultErrorAttributes {
     }
 
     private String getBindingErrorMessage(final List<FieldError> fieldErrors) {
+
         return fieldErrors
                 .stream()
                 .map(this::getBindingErrorMessage)
@@ -51,20 +48,21 @@ public class GlobalErrorAttributes extends DefaultErrorAttributes {
     }
 
     private String getBindingErrorMessage(final FieldError fieldError) {
+
         return "%s: %s".formatted(
                 fieldError.getField(),
-                bindingErrorMessageConverter.getMessage(fieldError)
+                fieldError.getDefaultMessage()
         );
     }
 
-    private Map<String, Object> getResponse(
-            final HttpStatus httpStatus,
-            final String message
-    ) {
+    private Map<String, Object> getResponse(final HttpStatus httpStatus,
+                                            final String message) {
+
         final BaseResponse<Object> response = BaseResponse.builder()
                 .status(String.valueOf(httpStatus.value()))
                 .message(message)
                 .build();
+
         return objectMapper.convertValue(response, new TypeReference<>() {});
     }
 }

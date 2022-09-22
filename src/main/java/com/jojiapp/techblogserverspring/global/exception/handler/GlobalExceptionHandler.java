@@ -19,12 +19,11 @@ import java.util.*;
 @Component
 public class GlobalExceptionHandler extends AbstractErrorWebExceptionHandler {
 
-    public GlobalExceptionHandler(
-            final ErrorAttributes errorAttributes,
-            final WebProperties.Resources resources,
-            final ApplicationContext applicationContext,
-            final ServerCodecConfigurer serverCodecConfigurer
-    ) {
+    public GlobalExceptionHandler(final ErrorAttributes errorAttributes,
+                                  final WebProperties.Resources resources,
+                                  final ApplicationContext applicationContext,
+                                  final ServerCodecConfigurer serverCodecConfigurer) {
+
         super(errorAttributes, resources, applicationContext);
         super.setMessageReaders(serverCodecConfigurer.getReaders());
         super.setMessageWriters(serverCodecConfigurer.getWriters());
@@ -32,17 +31,21 @@ public class GlobalExceptionHandler extends AbstractErrorWebExceptionHandler {
 
     @Override
     protected RouterFunction<ServerResponse> getRoutingFunction(final ErrorAttributes errorAttributes) {
+
         return RouterFunctions.route(RequestPredicates.all(), this::renderErrorResponse);
     }
 
     private Mono<ServerResponse> renderErrorResponse(final ServerRequest request) {
+
         final Map<String, Object> errorProperties = getErrorAttributes(request, ErrorAttributeOptions.defaults());
+
         return ServerResponse.status(getStatus(errorProperties))
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromValue(errorProperties));
     }
 
     private static int getStatus(final Map<String, Object> errorProperties) {
+
         return Integer.parseInt(errorProperties.get("status").toString());
     }
 }

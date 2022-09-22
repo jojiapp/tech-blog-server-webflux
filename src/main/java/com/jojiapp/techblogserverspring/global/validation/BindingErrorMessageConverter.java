@@ -4,7 +4,6 @@ import lombok.*;
 import org.springframework.context.*;
 import org.springframework.context.i18n.*;
 import org.springframework.stereotype.*;
-import org.springframework.validation.*;
 
 import java.util.*;
 
@@ -14,19 +13,24 @@ public class BindingErrorMessageConverter {
 
     private final MessageSource messageSource;
 
-    public String getMessage(final FieldError fieldError) {
-        return Arrays.stream(Objects.requireNonNull(fieldError.getCodes()))
-                .map(code -> createMessageOrNull(fieldError, code))
+    public String getMessage(final String[] codes,
+                             final Object[] args,
+                             final String defaultMessage) {
+
+        return Arrays.stream(codes)
+                .map(code -> createMessageOrNull(code, args))
                 .filter(Objects::nonNull)
                 .findFirst()
-                .orElse(fieldError.getDefaultMessage());
+                .orElse(defaultMessage);
     }
 
-    private String createMessageOrNull(final FieldError fieldError, final String code) {
+    private String createMessageOrNull(final String code,
+                                       final Object[] args) {
+
         try {
             return messageSource.getMessage(
                     code,
-                    fieldError.getArguments(),
+                    args,
                     LocaleContextHolder.getLocale()
             );
         } catch (NoSuchMessageException e) {

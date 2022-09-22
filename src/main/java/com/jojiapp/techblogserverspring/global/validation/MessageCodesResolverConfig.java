@@ -8,6 +8,7 @@ public class MessageCodesResolverConfig {
 
     @Bean
     public MessageCodesResolver messageCodesResolver() {
+
         return new DefaultMessageCodesResolver();
     }
 }
