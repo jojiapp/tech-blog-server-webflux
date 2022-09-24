@@ -16,9 +16,8 @@ public class PostRouter {
     protected RouterFunction<ServerResponse> routerExample(final PostHandler postHandler) {
 
         return RouterFunctions.route()
-                .POST("/posts", request ->
-                        postHandler.createPost(
-                                webfluxValidator.body(request.bodyToMono(PostCreate.class))
+                .POST("/posts", request -> postHandler.createPost(
+                                webfluxValidator.valid(request.bodyToMono(PostCreate.class))
                         )
                 )
                 .build();

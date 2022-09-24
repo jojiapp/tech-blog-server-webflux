@@ -3,6 +3,7 @@ package com.jojiapp.techblogserverspring.global.exception.handler;
 import com.fasterxml.jackson.core.type.*;
 import com.fasterxml.jackson.databind.*;
 import com.jojiapp.techblogserverspring.global.response.*;
+import com.jojiapp.techblogserverspring.global.validation.*;
 import lombok.*;
 import org.springframework.boot.web.error.*;
 import org.springframework.boot.web.reactive.error.*;
@@ -32,7 +33,7 @@ public class GlobalErrorAttributes extends DefaultErrorAttributes {
             return getResponse(BAD_REQUEST, e.getMessage());
         }
 
-        if(error instanceof BindException e) {
+        if(error instanceof BindingException e) {
             return getResponse(BAD_REQUEST, getBindingErrorMessage(e.getFieldErrors()));
         }
 

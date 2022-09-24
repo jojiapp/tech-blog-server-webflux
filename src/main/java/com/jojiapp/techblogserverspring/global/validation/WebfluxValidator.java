@@ -2,10 +2,8 @@ package com.jojiapp.techblogserverspring.global.validation;
 
 import lombok.*;
 import org.springframework.stereotype.*;
-import org.springframework.validation.*;
 import reactor.core.publisher.*;
 
-import javax.validation.Validator;
 import javax.validation.*;
 import java.util.*;
 
@@ -16,20 +14,19 @@ public class WebfluxValidator {
     private final Validator validator;
     private final BindingResultCreator bindingResultCreator;
 
-    public <BODY> Mono<BODY> body(final Mono<BODY> bodyMono) {
+    public <T> Mono<T> valid(final Mono<T> bodyMono) {
 
-        return bodyMono.flatMap(body -> {
+        return bodyMono.flatMap(body -> Mono.just(valid(body)));
+    }
 
-                    final Set<ConstraintViolation<BODY>> violations = validator.validate(body);
+    public <T> T valid(final T object) {
 
-                    if (violations.isEmpty()) {
-                        return Mono.just(body);
-                    }
+        final Set<ConstraintViolation<T>> violations = validator.validate(object);
 
-                    return Mono.error(
-                            new BindException(bindingResultCreator.create(violations))
-                    );
-                }
-        );
+        if (!violations.isEmpty()) {
+            throw new BindingException(bindingResultCreator.create(violations));
+        }
+
+        return object;
     }
 }
