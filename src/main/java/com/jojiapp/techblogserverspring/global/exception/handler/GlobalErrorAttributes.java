@@ -23,6 +23,7 @@ public class GlobalErrorAttributes extends DefaultErrorAttributes {
 
     private static final String BINDING_ERROR_MESSAGE_SEP = ", ";
     private final ObjectMapper objectMapper;
+
     @Override
     public Map<String, Object> getErrorAttributes(final ServerRequest request,
                                                   final ErrorAttributeOptions options) {

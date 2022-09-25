@@ -24,8 +24,7 @@ public class BindingErrorMessageConverter {
                 .orElse(defaultMessage);
     }
 
-    private String createMessageOrNull(final String code,
-                                       final Object[] args) {
+    private String createMessageOrNull(final String code, final Object[] args) {
 
         try {
             return messageSource.getMessage(
