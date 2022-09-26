@@ -1,6 +1,6 @@
 package com.jojiapp.techblogserverspring.global.validation;
 
-import com.jojiapp.techblogserverspring.global.converter.queryparams.resolver.*;
+import com.jojiapp.techblogserverspring.global.converter.multivaluemaptoobject.resolver.*;
 import lombok.*;
 import org.springframework.stereotype.*;
 import org.springframework.util.*;
@@ -15,7 +15,7 @@ public class WebfluxValidator {
 
     private final Validator validator;
     private final BindingResultCreator bindingResultCreator;
-    private final QueryParamsConverterResolver queryParamsConverterResolver;
+    private final MultiValueMapToObjectConverterResolver multiValueMapToObjectConverterResolver;
 
     public <T> Mono<T> valid(final Mono<T> bodyMono) {
 
@@ -24,7 +24,7 @@ public class WebfluxValidator {
 
     public <T> T valid(final MultiValueMap<String, String> queryParams, final Class<T> classType) {
 
-        return valid(queryParamsConverterResolver.convert(queryParams, classType));
+        return valid(multiValueMapToObjectConverterResolver.convert(queryParams, classType));
     }
 
     private  <T> T valid(final T object) {

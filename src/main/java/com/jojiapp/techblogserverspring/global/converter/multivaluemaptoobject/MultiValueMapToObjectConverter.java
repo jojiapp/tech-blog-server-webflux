@@ -1,21 +1,21 @@
-package com.jojiapp.techblogserverspring.global.converter.queryparams;
+package com.jojiapp.techblogserverspring.global.converter.multivaluemaptoobject;
 
 import com.fasterxml.jackson.databind.*;
-import com.jojiapp.techblogserverspring.global.converter.queryparams.resolver.*;
+import com.jojiapp.techblogserverspring.global.converter.multivaluemaptoobject.resolver.*;
 import org.springframework.stereotype.*;
 import org.springframework.util.*;
 
 import java.util.*;
 
 @Component
-public class DefaultQueryParamsObjectConverter extends AbstractQueryParamsConverter {
+public class MultiValueMapToObjectConverter extends AbstractMultiValueMapToObjectConverter {
 
     private final ObjectMapper objectMapper;
 
-    public DefaultQueryParamsObjectConverter(final QueryParamsConverterResolver queryParamsConverterResolver,
-                                             final ObjectMapper objectMapper) {
+    public MultiValueMapToObjectConverter(final MultiValueMapToObjectConverterResolver multiValueMapToObjectConverterResolver,
+                                          final ObjectMapper objectMapper) {
 
-        super(Object.class, queryParamsConverterResolver);
+        super(Object.class, multiValueMapToObjectConverterResolver);
         this.objectMapper = objectMapper;
     }
 
@@ -28,13 +28,7 @@ public class DefaultQueryParamsObjectConverter extends AbstractQueryParamsConver
     private static Map<String, Object> toMap(final MultiValueMap<String, String> queryParams) {
 
         final Map<String, Object> result = new HashMap<>();
-        queryParams.forEach((key, value) -> {
-            if (isList(value)) {
-                result.put(key, value);
-            } else {
-                result.put(key, value.get(0));
-            }
-        });
+        queryParams.forEach((key, value) -> result.put(key, isList(value) ? value : value.get(0)));
 
         return result;
     }

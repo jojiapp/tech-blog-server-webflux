@@ -1,6 +1,6 @@
-package com.jojiapp.techblogserverspring.global.converter.queryparams;
+package com.jojiapp.techblogserverspring.global.converter.multivaluemaptoobject;
 
-import com.jojiapp.techblogserverspring.global.converter.queryparams.resolver.*;
+import com.jojiapp.techblogserverspring.global.converter.multivaluemaptoobject.resolver.*;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.*;
 import org.springframework.util.*;
@@ -8,15 +8,15 @@ import org.springframework.util.*;
 import java.util.*;
 
 @Component
-public class PageableQueryParamsConverter extends AbstractQueryParamsConverter {
+public class MultiValueMapToPageableConverter extends AbstractMultiValueMapToObjectConverter {
 
     private static final String SIZE = "size";
     private static final String PAGE = "page";
     private static final String SORT = "sort";
 
-    public PageableQueryParamsConverter(final QueryParamsConverterResolver queryParamsConverterResolver) {
+    public MultiValueMapToPageableConverter(final MultiValueMapToObjectConverterResolver multiValueMapToObjectConverterResolver) {
 
-        super(PageRequest.class, queryParamsConverterResolver);
+        super(PageRequest.class, multiValueMapToObjectConverterResolver);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class PageableQueryParamsConverter extends AbstractQueryParamsConverter {
 
         return queryParams.get(SORT)
                 .stream()
-                .map(PageableQueryParamsConverter::createOrder)
+                .map(MultiValueMapToPageableConverter::createOrder)
                 .toList();
     }
 
