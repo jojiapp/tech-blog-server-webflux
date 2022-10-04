@@ -1,12 +1,9 @@
 package com.jojiapp.techblogserverspring;
 
-import com.jojiapp.techblogserverspring.config.*;
+import com.jojiapp.techblogserverspring.support.*;
 import org.junit.jupiter.api.*;
-import org.springframework.boot.test.context.*;
-import org.springframework.context.annotation.*;
 
-@SpringBootTest
-@Import(ServerCodecConfigurerConfig.class)
+@IntergrateTest
 class ApplicationTests {
 
     @Test

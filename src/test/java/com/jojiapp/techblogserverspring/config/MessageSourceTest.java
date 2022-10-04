@@ -1,16 +1,14 @@
 package com.jojiapp.techblogserverspring.config;
 
+import com.jojiapp.techblogserverspring.support.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.boot.test.context.*;
 import org.springframework.context.*;
-import org.springframework.context.annotation.*;
 
 import java.util.*;
 
-@SpringBootTest
-@Import(ServerCodecConfigurerConfig.class)
+@IntergrateTest
 public class MessageSourceTest {
 
     @Autowired

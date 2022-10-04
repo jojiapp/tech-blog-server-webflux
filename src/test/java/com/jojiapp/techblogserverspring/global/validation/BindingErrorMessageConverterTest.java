@@ -1,15 +1,16 @@
 package com.jojiapp.techblogserverspring.global.validation;
 
+import com.jojiapp.techblogserverspring.support.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
 import org.springframework.validation.*;
 
+@TestEnv
 public class BindingErrorMessageConverterTest {
 
-    private BindingErrorMessageConverter bindingErrorMessageConverter =
+    private final MessageCodesResolver messageCodesResolver = new DefaultMessageCodesResolver();
+    private final BindingErrorMessageConverter bindingErrorMessageConverter =
             new BindingErrorMessageConverter(MessageSourceCreator.messageSource());
-
-    private MessageCodesResolver messageCodesResolver = new DefaultMessageCodesResolver();
 
 
     @Test
