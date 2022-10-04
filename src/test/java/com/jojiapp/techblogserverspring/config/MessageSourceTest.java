@@ -1,12 +1,13 @@
 package com.jojiapp.techblogserverspring.config;
 
 import com.jojiapp.techblogserverspring.support.*;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.*;
 
 import java.util.*;
+
+import static org.assertj.core.api.Assertions.*;
 
 @IntergrateTest
 public class MessageSourceTest {
@@ -23,7 +24,7 @@ public class MessageSourceTest {
                 Locale.getDefault()
         );
 
-        Assertions.assertThat(message).isEqualTo("공백 일 수 없습니다.");
+        assertThat(message).isEqualTo("공백 일 수 없습니다.");
     }
 
 }

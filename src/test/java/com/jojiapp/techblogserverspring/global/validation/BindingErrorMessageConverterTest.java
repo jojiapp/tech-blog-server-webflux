@@ -1,9 +1,11 @@
 package com.jojiapp.techblogserverspring.global.validation;
 
+import com.jojiapp.techblogserverspring.global.validation.support.*;
 import com.jojiapp.techblogserverspring.support.*;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
 import org.springframework.validation.*;
+
+import static org.assertj.core.api.Assertions.*;
 
 @TestEnv
 public class BindingErrorMessageConverterTest {
@@ -31,7 +33,7 @@ public class BindingErrorMessageConverterTest {
         );
 
         // Then
-        Assertions.assertThat(message).isEqualTo("빈값은 안됩니다.");
+        assertThat(message).isEqualTo("빈값은 안됩니다.");
     }
 
     @Test
@@ -52,7 +54,7 @@ public class BindingErrorMessageConverterTest {
         );
 
         // Then
-        Assertions.assertThat(message).isEqualTo("NumberDTO의 number는 1 이상만 허용합니다.");
+        assertThat(message).isEqualTo("NumberDTO의 number는 1 이상만 허용합니다.");
     }
 
     @Test
@@ -74,7 +76,7 @@ public class BindingErrorMessageConverterTest {
         );
 
         // Then
-        Assertions.assertThat(message).isEqualTo(defaultMessage);
+        assertThat(message).isEqualTo(defaultMessage);
     }
 
 }

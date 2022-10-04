@@ -1,4 +1,4 @@
-package com.jojiapp.techblogserverspring.global.validation;
+package com.jojiapp.techblogserverspring.global.validation.support;
 
 
 import org.springframework.context.*;
