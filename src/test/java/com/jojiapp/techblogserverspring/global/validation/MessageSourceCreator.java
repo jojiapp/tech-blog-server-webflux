@@ -8,7 +8,7 @@ public class MessageSourceCreator {
 
     public static MessageSource messageSource() {
         final ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasenames("classpath:/messages");
+        messageSource.setBasenames("classpath:/messages-test");
         messageSource.setDefaultEncoding("UTF-8");
         messageSource.setFallbackToSystemLocale(false);
         return messageSource;

@@ -5,10 +5,12 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.context.*;
 import org.springframework.context.*;
+import org.springframework.context.annotation.*;
 
 import java.util.*;
 
 @SpringBootTest
+@Import(ServerCodecConfigurerConfig.class)
 public class MessageSourceTest {
 
     @Autowired
@@ -23,7 +25,7 @@ public class MessageSourceTest {
                 Locale.getDefault()
         );
 
-        Assertions.assertThat(message).isEqualTo("빈값은 안됩니다.");
+        Assertions.assertThat(message).isEqualTo("공백 일 수 없습니다.");
     }
 
 }
