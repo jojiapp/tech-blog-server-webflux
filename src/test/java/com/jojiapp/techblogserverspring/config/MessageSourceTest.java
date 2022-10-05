@@ -17,6 +17,7 @@ public class MessageSourceTest {
 
     @Test
     void messageProperties의_값을_정상적으로_읽어온다() {
+
         final String message = messageSource.getMessage(
                 "NotBlank",
                 null,

@@ -7,6 +7,7 @@ import org.springframework.context.support.*;
 public class MessageSourceCreator {
 
     public static MessageSource messageSource() {
+
         final ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasenames("classpath:/messages-test");
         messageSource.setDefaultEncoding("UTF-8");

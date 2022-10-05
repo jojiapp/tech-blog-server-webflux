@@ -30,6 +30,7 @@ class FieldErrorCreatorTest {
 
     @Test
     void 정상적으로_fieldError를_생성한다() throws Exception {
+
         // Given
         final ValidationDTO validationDTO = new ValidationDTO(NAME, AGE);
 
@@ -56,6 +57,8 @@ class FieldErrorCreatorTest {
 
     @Test
     void objectName을_추출한다() throws Exception {
+
+        // Given
         final ValidationDTO validationDTO = new ValidationDTO(NAME, 100);
 
         final List<ConstraintViolation<ValidationDTO>> constraintViolations = validator.validate(validationDTO)

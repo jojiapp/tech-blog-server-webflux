@@ -10,6 +10,7 @@ public class ServerCodecConfigurerConfig {
 
     @Bean
     public ServerCodecConfigurer serverCodecConfigurer() {
+
         return new DefaultServerCodecConfigurer();
     }
 }

@@ -17,6 +17,7 @@ public class BindingErrorMessageConverterTest {
 
     @Test
     void codes와_args를_넣어_해당하는_message를_가져온다() {
+
         // Given
         final String[] codes = messageCodesResolver.resolveMessageCodes(
                 "NotBlank",
@@ -38,6 +39,7 @@ public class BindingErrorMessageConverterTest {
 
     @Test
     void 우선순위_높은_code의_메세지를_가져온다() throws Exception {
+
         // Given
         final String[] codes = messageCodesResolver.resolveMessageCodes(
                 "Min",
@@ -59,6 +61,7 @@ public class BindingErrorMessageConverterTest {
 
     @Test
     void 일치하는_code가_존재하지_않으면_defaultMessage를_가져온다() throws Exception {
+
         // Given
         final String[] codes = messageCodesResolver.resolveMessageCodes(
                 "AAA",
