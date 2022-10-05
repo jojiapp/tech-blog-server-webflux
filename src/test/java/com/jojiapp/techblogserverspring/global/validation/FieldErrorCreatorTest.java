@@ -9,6 +9,7 @@ import javax.validation.Validator;
 import javax.validation.*;
 import java.util.*;
 
+import static com.jojiapp.techblogserverspring.global.validation.support.ValidationDTO.*;
 import static org.assertj.core.api.Assertions.*;
 
 @TestEnv
@@ -30,10 +31,7 @@ class FieldErrorCreatorTest {
     @Test
     void 정상적으로_fieldError를_생성한다() throws Exception {
         // Given
-        final String EMPTY = "   ";
-        final int AGE = -1;
-
-        final ValidationDTO validationDTO = new ValidationDTO(EMPTY, AGE);
+        final ValidationDTO validationDTO = new ValidationDTO(NAME, AGE);
 
         final Set<ConstraintViolation<ValidationDTO>> violations = validator.validate(validationDTO);
 
@@ -52,15 +50,13 @@ class FieldErrorCreatorTest {
         final FieldError nameError = fieldErrors.get(1);
         assertThat(nameError.getObjectName()).isEqualTo("validationDTO");
         assertThat(nameError.getField()).isEqualTo("name");
-        assertThat(nameError.getRejectedValue()).isEqualTo(EMPTY);
+        assertThat(nameError.getRejectedValue()).isEqualTo(NAME);
         assertThat(nameError.getDefaultMessage()).isEqualTo("빈값은 안됩니다.");
     }
 
     @Test
     void objectName을_추출한다() throws Exception {
-        final String EMPTY = "   ";
-
-        final ValidationDTO validationDTO = new ValidationDTO(EMPTY, 100);
+        final ValidationDTO validationDTO = new ValidationDTO(NAME, 100);
 
         final List<ConstraintViolation<ValidationDTO>> constraintViolations = validator.validate(validationDTO)
                 .stream()
