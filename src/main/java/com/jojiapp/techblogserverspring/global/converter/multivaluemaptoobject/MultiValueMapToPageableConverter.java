@@ -20,37 +20,37 @@ public class MultiValueMapToPageableConverter extends AbstractMultiValueMapToObj
     }
 
     @Override
-    public <T> T convert(final MultiValueMap<String, String> queryParams, final Class<T> classType) {
+    public <T> T convert(final MultiValueMap<String, String> multiValueMap, final Class<T> classType) {
 
         return (T) PageRequest.of(
-                getSize(queryParams),
-                getPage(queryParams),
-                Sort.by(getOrders(queryParams))
+                getSize(multiValueMap),
+                getPage(multiValueMap),
+                Sort.by(getOrders(multiValueMap))
         );
     }
 
-    private static int getSize(final MultiValueMap<String, String> queryParams) {
+    private static int getSize(final MultiValueMap<String, String> multiValueMap) {
 
-        return parseInt(queryParams, SIZE);
+        return parseInt(multiValueMap, SIZE);
     }
 
-    private static int getPage(final MultiValueMap<String, String> queryParams) {
+    private static int getPage(final MultiValueMap<String, String> multiValueMap) {
 
-        return parseInt(queryParams, PAGE);
+        return parseInt(multiValueMap, PAGE);
     }
 
-    private static int parseInt(final MultiValueMap<String, String> queryParams, final String key) {
+    private static int parseInt(final MultiValueMap<String, String> multiValueMap, final String key) {
 
         try {
-            return Integer.parseInt(queryParams.get(key).get(0));
+            return Integer.parseInt(multiValueMap.get(key).get(0));
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("%s: 숫자가 아닙니다.".formatted(key), e);
         }
     }
 
-    private static List<Sort.Order> getOrders(final MultiValueMap<String, String> queryParams) {
+    private static List<Sort.Order> getOrders(final MultiValueMap<String, String> multiValueMap) {
 
-        return queryParams.get(SORT)
+        return multiValueMap.get(SORT)
                 .stream()
                 .map(MultiValueMapToPageableConverter::createOrder)
                 .toList();

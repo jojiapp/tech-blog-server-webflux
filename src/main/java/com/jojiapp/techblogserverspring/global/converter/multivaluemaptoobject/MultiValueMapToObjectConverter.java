@@ -20,15 +20,15 @@ public class MultiValueMapToObjectConverter extends AbstractMultiValueMapToObjec
     }
 
     @Override
-    public <T> T convert(final MultiValueMap<String, String> queryParams, final Class<T> classType) {
+    public <T> T convert(final MultiValueMap<String, String> multiValueMap, final Class<T> classType) {
 
-        return objectMapper.convertValue(toMap(queryParams), classType);
+        return objectMapper.convertValue(toMap(multiValueMap), classType);
     }
 
-    private static Map<String, Object> toMap(final MultiValueMap<String, String> queryParams) {
+    private static Map<String, Object> toMap(final MultiValueMap<String, String> multiValueMap) {
 
         final Map<String, Object> result = new HashMap<>();
-        queryParams.forEach((key, value) -> result.put(key, isList(value) ? value : value.get(0)));
+        multiValueMap.forEach((key, value) -> result.put(key, isList(value) ? value : value.get(0)));
 
         return result;
     }

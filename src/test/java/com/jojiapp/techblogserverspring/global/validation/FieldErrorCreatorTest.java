@@ -39,6 +39,7 @@ class FieldErrorCreatorTest {
         // When
         final List<FieldError> fieldErrors = violations.stream()
                 .map(fieldErrorCreator::create)
+                .sorted(Comparator.comparing(FieldError::getField))
                 .toList();
 
         // Then
