@@ -24,7 +24,7 @@ class MultiValueMapToPageableConverterTest {
         multiValueMap.add("page", "1");
         multiValueMap.add("size", "20");
         multiValueMap.add("sort", "name");
-        multiValueMap.add("sort", "created,desc");
+        multiValueMap.add("sort", "createdAt,desc");
 
         // When
         final Pageable pageable = multiValueMapToPageableConverter.convert(multiValueMap, PageRequest.class);
@@ -37,8 +37,8 @@ class MultiValueMapToPageableConverterTest {
         final Sort.Direction nameDirection = pageable.getSort().getOrderFor("name").getDirection();
         assertThat(nameDirection).isEqualTo(Sort.Direction.ASC);
 
-        assert pageable.getSort().getOrderFor("created") != null;
-        final Sort.Direction createdDirection = pageable.getSort().getOrderFor("created").getDirection();
+        assert pageable.getSort().getOrderFor("createdAt") != null;
+        final Sort.Direction createdDirection = pageable.getSort().getOrderFor("createdAt").getDirection();
         assertThat(createdDirection).isEqualTo(Sort.Direction.DESC);
     }
 
@@ -68,7 +68,7 @@ class MultiValueMapToPageableConverterTest {
         multiValueMap.add("page", "1");
         multiValueMap.add("size", "20");
         multiValueMap.add("sort", "name,%s".formatted(direction));
-        multiValueMap.add("sort", "created,desc");
+        multiValueMap.add("sort", "createdAt,desc");
 
         // When
         final Pageable pageable = multiValueMapToPageableConverter.convert(multiValueMap, PageRequest.class);

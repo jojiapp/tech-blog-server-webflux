@@ -11,9 +11,9 @@ public class MultiValueMapToObjectConverterResolver {
 
     private final Map<Class<?>, AbstractMultiValueMapToObjectConverter> converterMap = new ConcurrentReferenceHashMap<>();
 
-    public <T> T convert(final MultiValueMap<String, String> queryParams, final Class<T> classType) {
+    public <T> T convert(final MultiValueMap<String, String> multiValueMap, final Class<T> classType) {
 
-        return getObjectConverter(classType).convert(queryParams, classType);
+        return getObjectConverter(classType).convert(multiValueMap, classType);
     }
 
     private AbstractMultiValueMapToObjectConverter getObjectConverter(final Class<?> classType) {
@@ -24,8 +24,8 @@ public class MultiValueMapToObjectConverterResolver {
     private AbstractMultiValueMapToObjectConverter getDefaultConverterOrThrow() {
 
         final AbstractMultiValueMapToObjectConverter defaultConverter = converterMap.get(Object.class);
-        if(defaultConverter == null) {
-            throw new IllegalStateException("Default QueryParamsConverter가 존재하지 않습니다.");
+        if (defaultConverter == null) {
+            throw new IllegalStateException("Default MultiValueMapToObjectConverter가 존재하지 않습니다.");
         }
 
         return defaultConverter;
