@@ -1,9 +1,9 @@
 package com.jojiapp.techblogserverspring;
 
-import com.jojiapp.techblogserverspring.support.*;
 import org.junit.jupiter.api.*;
+import org.springframework.boot.test.context.*;
 
-@IntergrateTest
+@SpringBootTest
 class ApplicationTests {
 
     @Test

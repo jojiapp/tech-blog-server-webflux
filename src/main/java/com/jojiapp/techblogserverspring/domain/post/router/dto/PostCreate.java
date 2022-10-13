@@ -4,8 +4,9 @@ import lombok.*;
 
 import javax.validation.constraints.*;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
 public class PostCreate {
 
     @NotBlank

@@ -13,7 +13,7 @@ public class PostRouter {
     private final WebfluxValidator webfluxValidator;
 
     @Bean
-    protected RouterFunction<ServerResponse> routerExample(final PostHandler postHandler) {
+    protected RouterFunction<ServerResponse> postRouters(final PostHandler postHandler) {
 
         return RouterFunctions.route()
                 .POST("/posts", request -> postHandler.createPost(

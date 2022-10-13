@@ -3,13 +3,15 @@ package com.jojiapp.techblogserverspring.config;
 import com.jojiapp.techblogserverspring.support.*;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.boot.test.context.*;
 import org.springframework.context.*;
 
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.*;
 
-@IntergrateTest
+@SpringBootTest
+@TestEnv
 public class MessageSourceTest {
 
     @Autowired
