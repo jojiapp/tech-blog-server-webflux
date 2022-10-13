@@ -5,6 +5,9 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.context.*;
 import org.springframework.context.*;
+import org.springframework.context.annotation.*;
+import org.springframework.http.codec.*;
+import org.springframework.http.codec.support.*;
 
 import java.util.*;
 
@@ -31,3 +34,4 @@ public class MessageSourceTest {
     }
 
 }
+

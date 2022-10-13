@@ -3,12 +3,23 @@ package com.jojiapp.techblogserverspring.domain.post.router;
 import com.jojiapp.techblogserverspring.domain.post.router.dto.*;
 import com.jojiapp.techblogserverspring.support.*;
 import org.junit.jupiter.api.*;
-import org.springframework.context.annotation.*;
+import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;
+import org.springframework.web.reactive.function.server.*;
 import reactor.core.publisher.*;
 
-@Import({PostRouter.class, PostHandler.class})
 class PostRouterTest extends IntegrateTest {
+
+    @Autowired
+    private PostHandler postHandler;
+
+    @Override
+    protected RouterFunction<ServerResponse> getRouter() {
+        return RouterFunctions.route(
+                RequestPredicates.POST("/posts"),
+                request -> postHandler.createPost(request.bodyToMono(PostCreate.class))
+        );
+    }
 
     @Test
     void 포스팅을_등록한다() throws Exception {
